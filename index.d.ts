@@ -1,4 +1,4 @@
-/**
+/*
 * @license Apache-2.0
 *
 * Copyright (c) 2026 The Stdlib Authors.
@@ -16,22 +16,29 @@
 * limitations under the License.
 */
 
-'use strict';
+// TypeScript Version: 4.1
 
-// MODULES //
+/// <reference types="https://cdn.jsdelivr.net/gh/stdlib-js/types@esm/index.d.ts"/>
 
-var incrminmaxabs = require( '@stdlib/stats-incr-minmaxabs' );
-var isnan = require( '@stdlib/math-base-assert-is-nan' );
+import { ArrayLike } from '@stdlib/types/array';
 
-
-// MAIN //
+/**
+* If provided a value, the accumulator function returns updated minimum and maximum absolute values. If not provided a value, the accumulator function returns the current minimum and maximum absolute values.
+*
+* ## Notes
+*
+* -   If provided `NaN`, the value is ignored and does not affect the accumulated result.
+*
+* @param x - input value
+* @returns output array or null
+*/
+type accumulator = ( x?: number ) => ArrayLike<number> | null;
 
 /**
 * Returns an accumulator function which incrementally computes minimum and maximum absolute values, ignoring `NaN` values.
 *
-* @param {Collection} [out] - output array
-* @throws {TypeError} output argument must be array-like
-* @returns {Function} accumulator function
+* @param out - output array
+* @returns accumulator function
 *
 * @example
 * var accumulator = incrnanminmaxabs();
@@ -54,31 +61,9 @@ var isnan = require( '@stdlib/math-base-assert-is-nan' );
 * mm = accumulator();
 * // returns [ 2.0, 5.0 ]
 */
-function incrnanminmaxabs( out ) {
-	var minmax;
-	if ( arguments.length > 0 ) {
-		minmax = incrminmaxabs( out );
-	} else {
-		minmax = incrminmaxabs();
-	}
-	return accumulator;
-
-	/**
-	* If provided a value, the accumulator function returns updated minimum and maximum absolute values. If not provided a value, the accumulator function returns the current minimum and maximum absolute values.
-	*
-	* @private
-	* @param {number} [x] - input value
-	* @returns {(ArrayLikeObject|null)} output array or null
-	*/
-	function accumulator( x ) {
-		if ( arguments.length === 0 || isnan( x ) ) {
-			return minmax();
-		}
-		return minmax( x );
-	}
-}
+declare function incrnanminmaxabs( out?: ArrayLike<number> ): accumulator;
 
 
 // EXPORTS //
 
-module.exports = incrnanminmaxabs;
+export = incrnanminmaxabs;
